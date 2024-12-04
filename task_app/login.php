@@ -10,7 +10,7 @@
 
 <body>
     <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div class="bg-white py-8 px-6 mt-10 sm:mx-auto sm:w-full shadow rounded-lg sm:max-w-sm">
             <h1 class="bold text-3xl">Task App</h1>
             <form class="space-y-6" action="#" method="POST">
                 <div>
