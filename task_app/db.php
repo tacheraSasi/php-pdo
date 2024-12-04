@@ -16,7 +16,7 @@ $options = [
 $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
 
 try {
-    $conn = new PDO($dsn, $username, $password, $options);
+    $pdo = new PDO($dsn, $username, $password, $options);
     // echo "Database connection established successfully!";
 } catch (PDOException $e) {
     die("Database connection failed: " . $e->getMessage());

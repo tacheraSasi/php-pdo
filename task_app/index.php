@@ -63,7 +63,7 @@ $tasks = $stmt->fetchAll();
                             <form action="update_task.php?id=<?=$task['id']?>" method="POST">
                                 <button class="px-2 py-1 text-sm text-green-600">Complete</button>
                             </form>
-                            <form action="delete_task.phpid=<?=$task['id']?>" method="POST">
+                            <form action="delete_task.php?id=<?=$task['id']?>" method="POST">
                                 <button class="px-2 py-1 text-sm text-red-600">Delete</button>
                             </form>
                         </div>
