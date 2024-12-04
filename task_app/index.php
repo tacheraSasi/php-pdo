@@ -1,3 +1,19 @@
+<?php 
+require 'db.php';
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
+}
+
+$user_id = $_SESSION['user_id'];
+$stmt = $pdo->prepare("SELECT * FROM tasks WHERE user_id = :user_id ORDER BY created_at DESC");
+$stmt->execute(['user_id' => $user_id]);
+$tasks = $stmt->fetchAll();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,21 +53,22 @@
                 </form>
                 <h2 class="text-lg font-medium text-neutral-900 mt-8">Your Tasks</h2>
                 <ul class="mt-4 space-y-4">
-                    <!-- Loop over tasks here -->
+                    <?php foreach($tasks as $task):?>
                     <li class="flex items-center justify-between bg-neutral-50 p-4 rounded-lg shadow">
                         <div>
-                            <h3 class="font-medium text-neutral-900">Task Title</h3>
-                            <p class="text-sm text-neutral-500">Task Description</p>
+                            <h3 class="font-medium text-neutral-900"><?=$task['title']?></h3>
+                            <p class="text-sm text-neutral-500"><?=$task['description']?></p>
                         </div>
                         <div class="flex space-x-2">
-                            <form action="update_task.php" method="POST">
+                            <form action="update_task.php?id=<?=$task['id']?>" method="POST">
                                 <button class="px-2 py-1 text-sm text-green-600">Complete</button>
                             </form>
-                            <form action="delete_task.php" method="POST">
+                            <form action="delete_task.phpid=<?=$task['id']?>" method="POST">
                                 <button class="px-2 py-1 text-sm text-red-600">Delete</button>
                             </form>
                         </div>
                     </li>
+                    <?php endforeach?>
                 </ul>
             </div>
         </div>
