@@ -3,28 +3,17 @@ require '../parseEnv.php';
 parseEnv(__DIR__ . '/.env');
 
 # Retrieving environment variables
-$host = getenv("HOST");
-$dbname = getenv("DBNAME");
-$username = getenv("USERNAME");
-$password = getenv("PASSWORD");
+$host = getenv("DB_HOST");
+$dbname = getenv("DB_NAME");
+$username = getenv("DB_USERNAME");
+$password = getenv("DB_PASSWORD");
 
-$options = [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, # Enabling exception handling for errors
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, # Fetching results as associative arrays
-];
-// echo $host;
 $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
 
-try {
-    $pdo = new PDO($dsn, $username, $password, $options);
-    // echo "Database connection established successfully!";
-} catch (PDOException $e) {
-    die("Database connection failed: " . $e->getMessage());
-}
 
 class DB{
     private PDO $conn;
-
+    //TODO:Will add a feature to automatic load credentials from the .env
     public function __construct(string $dsn, string $username, string $password, array $options = []){
         try{
             $this->conn = new PDO($dsn, $username, $password, $options);
@@ -32,5 +21,16 @@ class DB{
         }catch(PDOException $e){
             die("Database connection failed: " . $e->getMessage());
         }
+    }
+
+    public function query(string $sql, array $params = []){
+        try {
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute($params);
+            return $stmt;
+        } catch (PDOException $e ) {
+            die("Something when wrong while running the query $sql ". $e->getMessage());
+        }
+
     }
 }
