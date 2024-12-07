@@ -21,3 +21,16 @@ try {
 } catch (PDOException $e) {
     die("Database connection failed: " . $e->getMessage());
 }
+
+class DB{
+    private PDO $conn;
+
+    public function __construct(string $dsn, string $username, string $password, array $options = []){
+        try{
+            $this->conn = new PDO($dsn, $username, $password, $options);
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }catch(PDOException $e){
+            die("Database connection failed: " . $e->getMessage());
+        }
+    }
+}
