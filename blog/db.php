@@ -37,12 +37,16 @@ class DB
 
     }
 
-    public function fetchAll()
+    public function fetchAll(string $sql, array $params = [] )
     {
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function fetchOne()
+    public function fetchOne(string $sql,array $params = [])
     {
+        $stmt = $this->query($sql);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     /**
