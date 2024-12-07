@@ -1,21 +1,9 @@
 <?php
-require '../parseEnv.php';
-parseEnv(__DIR__ . '/.env');
-
-# Retrieving environment variables
-$host = getenv("DB_HOST");
-$dbname = getenv("DB_NAME");
-$username = getenv("DB_USERNAME");
-$password = getenv("DB_PASSWORD");
-
-$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
-
-
 class Database {
     private static ?PDO $connection = null;
 
     /**
-     * Initialize the database connection.
+     * Initializes the database connection.
      */
     public static function connect(string $dsn, string $username = '', string $password = '', array $options = []): void {
         try {
@@ -27,7 +15,7 @@ class Database {
     }
 
     /**
-     * Execute a query with optional parameters.
+     * Executes a query with optional parameters.
      */
     public static function query(string $sql, array $params = []): bool|PDOStatement {
         if (!self::$connection) {
@@ -44,7 +32,7 @@ class Database {
     }
 
     /**
-     * Fetch all results as an associative array.
+     * Fetches all results as an associative array.
      */
     public static function fetchAll(string $sql, array $params = []): array {
         $stmt = self::query($sql, $params);
@@ -52,7 +40,7 @@ class Database {
     }
 
     /**
-     * Fetch a single row as an associative array.
+     * Fetches a single row as an associative array.
      */
     public static function fetchOne(string $sql, array $params = []): array|false {
         $stmt = self::query($sql, $params);
@@ -60,7 +48,7 @@ class Database {
     }
 
     /**
-     * Fetch all results as objects of a specified class.
+     * Fetches all results as objects of a specified class.
      */
     public static function fetchObjects(string $sql, array $params = [], string $className): array {
         $stmt = self::query($sql, $params);
