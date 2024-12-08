@@ -1,7 +1,7 @@
 <?php
-require '../parseEnv.php';
+require '../../parseEnv.php';
 require_once'db.php';
-parseEnv(__DIR__ . '/.env');
+parseEnv(__DIR__ . '../.env');
 
 # Retrieving environment variables
 $host = getenv("DB_HOST");
