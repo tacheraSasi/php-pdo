@@ -1,6 +1,6 @@
 <?php
-require_once "app.php";
-require_once "db.php";
+require "app.php";
+require "db.php";
 
 class Auth extends Database{
 
