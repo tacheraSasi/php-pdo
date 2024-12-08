@@ -10,9 +10,12 @@ class Auth extends Database{
     public static function register($username, $email, $password){
         $sql = "INSERT INTO users (username, email,password) VALUES (:name, :email ,:password)";
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-        if (self::query($sql,['name'=> $username,'email'=> $email,'password'=> $hashed_password])){
-            App::redirect('login.php');
+        $isRegistered = self::query($sql,['name'=> $username,'email'=> $email,'password'=> $hashed_password]);
+
+        if($isRegistered != true){
+            return App::error("Failed to register the user. Something went wrong");
         }
+        return App::redirect('login.php');
     }
     public static function logout(){}
 
