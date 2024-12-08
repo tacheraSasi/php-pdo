@@ -18,8 +18,8 @@ class Auth extends Database{
     public static function login($email, $password){
         $sql = "SELECT * FROM users WHERE email = :email";
         $user = self::fetchOne($sql,["email"=>$email]);
-
-        if(self::comparePass($password,$user["password"])){
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+        if(self::comparePass($hashed_password,$user["password"])){
             $_SESSION["user"] = $user;
             return App::redirect("index.php");
         }

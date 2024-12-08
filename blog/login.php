@@ -1,5 +1,5 @@
 <?php
-require 'auth.php';
+require 'app/auth.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
