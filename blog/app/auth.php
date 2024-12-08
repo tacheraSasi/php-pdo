@@ -1,11 +1,30 @@
-<?php 
+<?php
 require_once "app.php";
 require_once "db.php";
 
 class Auth extends Database{
-    public function __construct(){}
 
-    public static function login($username, $password){}
+    public function __construct(){}
+    
+    public static function user(){
+        return $_SESSION['user'];
+    }
+    public static function comparePass($pass1,$pass2){
+        if($pass1 == $pass2) return true;
+
+        return false;
+    }
+
+    public static function login($email, $password){
+        $sql = "SELECT * FROM users WHERE email = :email";
+        $user = self::fetchOne($sql,["email"=>$email]);
+
+        if(self::comparePass($password,$user["password"])){
+            $_SESSION["user"] = $user;
+            return App::redirect("index.php");
+        }
+        return App::error("Something went wrong failed to login");
+    }
 
     public static function register($username, $email, $password){
         $sql = "INSERT INTO users (username, email,password) VALUES (:name, :email ,:password)";
@@ -17,7 +36,11 @@ class Auth extends Database{
         }
         return App::redirect('login.php');
     }
-    public static function logout(){}
+    public static function logout(){
+        session_start();
+        session_destroy();
+        App::redirect("login.php");
+    }
 
 
 
