@@ -2,7 +2,7 @@
 require_once("app/app.php");
 
 $title = Str::slug("ScrolSpace - Explore Stunning Stories");
-echo "title is $title";
+// echo "title is $title";
 ?>
 
 <!DOCTYPE html>
