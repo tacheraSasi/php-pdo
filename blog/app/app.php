@@ -15,4 +15,12 @@ class App {
         // Adds error message to the session errors array
         array_push($_SESSION["errors"], $message);
     }
+
+    
+}
+
+class Str{
+    public static function slug(string $str){
+        return strtolower($str);
+    }
 }
